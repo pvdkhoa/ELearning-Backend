@@ -8,7 +8,7 @@ const app = express();
 // Define CORS options
 const corsOptions = {
   credentials: true,    // Credentials = true thì mới quản lí đc session cookie, duy trì phiên làm việc
-  origin: 'https://elearning-app-six.vercel.app', // Use HTTP for local development
+  origin: 'https://elearning-app-five.vercel.app', // Use HTTP for local development
 };
 
 // Middleware
