@@ -13,8 +13,8 @@ const getTrackingQuestInExam = async (req, res) => {
     console.log(userID);
     const query = `
       SELECT			
-      trackingexams.questionID,
-      trackingexams.selectedAnswer,
+      trackingExams.questionID,
+      trackingExams.selectedAnswer,
       answers.correctAnswer,
       questions.questionText,
       questions.option1,
@@ -22,15 +22,15 @@ const getTrackingQuestInExam = async (req, res) => {
       questions.option3,
       questions.option4
     FROM
-      trackingexams
+      trackingExams
     LEFT JOIN
-      questions ON trackingexams.questionID = questions.questionID
+      questions ON trackingExams.questionID = questions.questionID
     LEFT JOIN
       answers ON questions.questionID = answers.questionID
     WHERE
-      trackingexams.userID = :userID
+      trackingExams.userID = :userID
       AND questions.examID = :examID
-      AND trackingexams.turnID = :turnID;
+      AND trackingExams.turnID = :turnID;
   `;
     const questions = await db.sequelize.query(query, {
       replacements: { examID: examID, userID: userID,turnID: turnID },
@@ -57,17 +57,17 @@ const getQuestionsAndCorrectQuest = async (req, res) => {
   
       const queryCorrectQuest = `
         SELECT
-          SUM(CASE WHEN trackingexams.selectedAnswer = answers.correctAnswer THEN 1 ELSE 0 END) AS numOfCorrectAnswer
+          SUM(CASE WHEN trackingExams.selectedAnswer = answers.correctAnswer THEN 1 ELSE 0 END) AS numOfCorrectAnswer
         FROM
-          trackingexams
+          trackingExams
         LEFT JOIN
-          questions ON trackingexams.questionID = questions.questionID
+          questions ON trackingExams.questionID = questions.questionID
         LEFT JOIN
           answers ON questions.questionID = answers.questionID
         WHERE
-          trackingexams.userID = :userID
+          trackingExams.userID = :userID
           AND questions.examID = :examID
-          AND trackingexams.turnID = :turnID;
+          AND trackingExams.turnID = :turnID;
       `;
   
       const [scoreResult, numQuestExamResult] = await Promise.all([
